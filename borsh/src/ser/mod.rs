@@ -657,3 +657,11 @@ where
         }
     }
 }
+
+#[cfg(feature = "chrono")]
+impl BorshSerialize for chrono::DateTime<chrono::Utc> {
+    fn serialize<W: Write>(&self, writer: &mut W) -> Result<()> {
+        let millis = self.timestamp_millis();
+        millis.serialize(writer)
+    }
+}
