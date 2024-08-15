@@ -39,6 +39,7 @@ bson = { version = "2", optional = true }
 
 uuid = { version = "1", optional = true }
 chrono = { version = "0.4", optional = true }
+serde_json = { version = "1", optional = true }
 
 [dev-dependencies]
 insta = "1.29.0"
@@ -57,3 +58,5 @@ std = []
 # Be sure that this is what you want before enabling this feature.
 rc = []
 de_strict_order = []
+
+serde_json = ["derive", "dep:serde_json"]

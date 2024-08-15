@@ -1070,3 +1070,11 @@ mod chrono_test {
         assert_eq!(input, result)
     }
 }
+#[cfg(feature = "serde_json")]
+impl BorshDeserialize for serde_json::Value {
+    fn deserialize_reader<R: Read>(reader: &mut R) -> Result<Self> {
+        use crate::my_json::Value;
+        let v = Value::deserialize_reader(reader)?;
+        Ok(v.into())
+    }
+}

@@ -91,6 +91,9 @@ pub mod schema;
 pub(crate) mod schema_helpers;
 pub mod ser;
 
+#[cfg(feature = "serde_json")]
+pub(crate) mod my_json;
+
 pub use de::BorshDeserialize;
 pub use de::{from_reader, from_slice};
 #[cfg(feature = "unstable__schema")]
