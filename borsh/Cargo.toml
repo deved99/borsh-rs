@@ -37,6 +37,8 @@ hashbrown = { version = ">=0.11,<0.15.0", optional = true }
 bytes = { version = "1", optional = true }
 bson = { version = "2", optional = true }
 
+serde_json = { version = "1", optional = true }
+
 [dev-dependencies]
 insta = "1.29.0"
 
@@ -54,3 +56,5 @@ std = []
 # Be sure that this is what you want before enabling this feature.
 rc = []
 de_strict_order = []
+
+serde_json = ["derive", "dep:serde_json"]

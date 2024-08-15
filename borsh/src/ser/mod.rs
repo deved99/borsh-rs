@@ -657,3 +657,12 @@ where
         }
     }
 }
+
+#[cfg(feature = "serde_json")]
+impl BorshSerialize for serde_json::Value {
+    fn serialize<W: Write>(&self, writer: &mut W) -> Result<()> {
+        use crate::my_json::Value;
+        let intermediate: Value = self.clone().into();
+        intermediate.serialize(writer)
+    }
+}

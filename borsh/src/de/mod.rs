@@ -1015,3 +1015,12 @@ pub fn from_reader<R: Read, T: BorshDeserialize>(reader: &mut R) -> Result<T> {
         _ => Err(Error::new(ErrorKind::InvalidData, ERROR_NOT_ALL_BYTES_READ)),
     }
 }
+
+#[cfg(feature = "serde_json")]
+impl BorshDeserialize for serde_json::Value {
+    fn deserialize_reader<R: Read>(reader: &mut R) -> Result<Self> {
+        use crate::my_json::Value;
+        let v = Value::deserialize_reader(reader)?;
+        Ok(v.into())
+    }
+}
