@@ -657,3 +657,10 @@ where
         }
     }
 }
+
+#[cfg(feature = "uuid")]
+impl BorshSerialize for uuid::Uuid {
+    fn serialize<W: Write>(&self, writer: &mut W) -> Result<()> {
+        self.as_u128().serialize(writer)
+    }
+}

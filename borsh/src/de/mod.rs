@@ -1015,3 +1015,26 @@ pub fn from_reader<R: Read, T: BorshDeserialize>(reader: &mut R) -> Result<T> {
         _ => Err(Error::new(ErrorKind::InvalidData, ERROR_NOT_ALL_BYTES_READ)),
     }
 }
+
+#[cfg(feature = "uuid")]
+impl BorshDeserialize for uuid::Uuid {
+    fn deserialize_reader<R: Read>(reader: &mut R) -> Result<Self> {
+        let n = u128::deserialize_reader(reader)?;
+        Ok(Self::from_u128(n))
+    }
+}
+
+#[cfg(feature = "uuid")]
+#[cfg(test)]
+mod uuid_test {
+    use super::*;
+
+    #[test]
+    fn test_uuid_deserialize() {
+        let input = uuid::uuid!("2db6bed8-5e88-4197-b16b-f6eb91515179");
+        // let input = 123_u128;
+        let serialized = crate::to_vec(&input).expect("Failed serializing");
+        let result = uuid::Uuid::try_from_slice(&serialized).expect("Failed deserializing");
+        assert_eq!(input, result)
+    }
+}
