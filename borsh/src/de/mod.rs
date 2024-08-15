@@ -1038,3 +1038,35 @@ mod uuid_test {
         assert_eq!(input, result)
     }
 }
+
+#[cfg(feature = "chrono")]
+impl BorshDeserialize for chrono::DateTime<chrono::Utc> {
+    fn deserialize_reader<R: Read>(reader: &mut R) -> Result<Self> {
+        use std::io::ErrorKind;
+        let millis = i64::deserialize_reader(reader)?;
+        Self::from_timestamp_millis(millis).ok_or_else(|| {
+            let msg = format!(
+                "Cannot parse {:?} as millis from January 1, 1970 0:00:00.000 UTC",
+                millis
+            );
+            Error::new(ErrorKind::Other, msg)
+        })
+    }
+}
+
+#[cfg(feature = "chrono")]
+#[cfg(test)]
+mod chrono_test {
+    use super::*;
+
+    #[test]
+    fn test_chrono_deserialize() {
+        let input = chrono::DateTime::parse_from_rfc3339("1996-12-19T16:39:57-08:00")
+            .expect("Failed parsing the specified datetime as rfc3339")
+            .to_utc();
+        // let input = 123_u128;
+        let serialized = crate::to_vec(&input).expect("Failed serializing");
+        let result = chrono::DateTime::try_from_slice(&serialized).expect("Failed deserializing");
+        assert_eq!(input, result)
+    }
+}

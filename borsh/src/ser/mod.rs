@@ -658,9 +658,18 @@ where
     }
 }
 
+
 #[cfg(feature = "uuid")]
 impl BorshSerialize for uuid::Uuid {
     fn serialize<W: Write>(&self, writer: &mut W) -> Result<()> {
         self.as_u128().serialize(writer)
+    }
+}
+
+#[cfg(feature = "chrono")]
+impl BorshSerialize for chrono::DateTime<chrono::Utc> {
+    fn serialize<W: Write>(&self, writer: &mut W) -> Result<()> {
+        let millis = self.timestamp_millis();
+        millis.serialize(writer)
     }
 }
