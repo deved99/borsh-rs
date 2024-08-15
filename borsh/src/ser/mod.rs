@@ -680,3 +680,13 @@ impl BorshSerialize for serde_json::Value {
         intermediate.serialize(writer)
     }
 }
+
+#[cfg(feature = "std")]
+impl BorshSerialize for std::time::Duration {
+    fn serialize<W: Write>(&self, writer: &mut W) -> Result<()> {
+        // let (secs, nanos) = <(u64, u32)>::deserialize_reader(reader)?;
+        // Ok(Self::new(secs, nanos))
+        let intermediate = (self.as_secs(), self.subsec_nanos());
+        intermediate.serialize(writer)
+    }
+}

@@ -1078,3 +1078,11 @@ impl BorshDeserialize for serde_json::Value {
         Ok(v.into())
     }
 }
+
+#[cfg(feature = "std")]
+impl BorshDeserialize for std::time::Duration {
+    fn deserialize_reader<R: Read>(reader: &mut R) -> Result<Self> {
+        let (secs, nanos) = <(u64, u32)>::deserialize_reader(reader)?;
+        Ok(Self::new(secs, nanos))
+    }
+}
