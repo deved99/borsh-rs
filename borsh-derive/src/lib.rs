@@ -74,7 +74,7 @@ Attribute takes literal string value, which is the syn's [Path] to `borsh` crate
 Attribute is optional.
 
 1. If the attribute is not provided, [crate_name](proc_macro_crate::crate_name) is used to find a version of `borsh`
-in `[dependencies]` of the relevant `Cargo.toml`. If there is no match, a compilation error, similar to the following, is raised:
+   in `[dependencies]` of the relevant `Cargo.toml`. If there is no match, a compilation error, similar to the following, is raised:
 
 ```bash
  1  error: proc-macro derive panicked
@@ -282,10 +282,14 @@ struct B<K, V> {
 }
 ```
 
+###### usage (comprehensive example)
+
+[borsh/examples/serde_json_value.rs](https://github.com/near/borsh-rs/blob/master/borsh/examples/serde_json_value.rs) is
+a more complex example of how the attribute may be used.
+
 ###### interaction with `#[borsh(skip)]`
 
 `#[borsh(serialize_with = ...)]` is not allowed to be used simultaneously with `#[borsh(skip)]`.
-
 
 */
 #[proc_macro_derive(BorshSerialize, attributes(borsh))]
@@ -361,7 +365,7 @@ Attribute takes literal string value, which is the syn's [Path] to `borsh` crate
 Attribute is optional.
 
 1. If the attribute is not provided, [crate_name](proc_macro_crate::crate_name) is used to find a version of `borsh`
-in `[dependencies]` of the relevant `Cargo.toml`. If there is no match, a compilation error, similar to the following, is raised:
+   in `[dependencies]` of the relevant `Cargo.toml`. If there is no match, a compilation error, similar to the following, is raised:
 
 ```bash
  1  error: proc-macro derive panicked
@@ -622,6 +626,11 @@ struct B<K: Hash + Eq, V> {
 }
 ```
 
+###### usage (comprehensive example)
+
+[borsh/examples/serde_json_value.rs](https://github.com/near/borsh-rs/blob/master/borsh/examples/serde_json_value.rs) is
+a more complex example of how the attribute may be used.
+
 ###### interaction with `#[borsh(skip)]`
 
 `#[borsh(deserialize_with = ...)]` is not allowed to be used simultaneously with `#[borsh(skip)]`.
@@ -697,7 +706,7 @@ Attribute takes literal string value, which is the syn's [Path] to `borsh` crate
 Attribute is optional.
 
 1. If the attribute is not provided, [crate_name](proc_macro_crate::crate_name) is used to find a version of `borsh`
-in `[dependencies]` of the relevant `Cargo.toml`. If there is no match, a compilation error, similar to the following, is raised:
+   in `[dependencies]` of the relevant `Cargo.toml`. If there is no match, a compilation error, similar to the following, is raised:
 
 ```bash
  1  error: proc-macro derive panicked
@@ -824,7 +833,7 @@ Attribute takes literal string value, which is a comma-separated list of `Parame
 It may be used in order to:
 
 1. fix complex cases, when derive hasn't figured out the right bounds on type parameters and
-declaration parameters automatically.
+   declaration parameters automatically.
 2. remove parameters, which do not take part in serialization/deserialization, from bounded ones and from declaration parameters.
 
 `ParameterOverride` describes an entry like `order_param => override_type`,
