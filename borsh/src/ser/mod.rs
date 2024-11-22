@@ -706,3 +706,10 @@ impl BorshSerialize for std::time::Duration {
         intermediate.serialize(writer)
     }
 }
+
+#[cfg(feature = "arrayvec")]
+impl<const N: usize> BorshSerialize for arrayvec::ArrayString<N> {
+    fn serialize<W: Write>(&self, writer: &mut W) -> Result<()> {
+        self.as_str().serialize(writer)
+    }
+}

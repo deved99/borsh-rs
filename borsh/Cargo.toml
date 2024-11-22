@@ -44,6 +44,7 @@ bson = { version = "2", optional = true }
 uuid = { version = "1", optional = true }
 chrono = { version = "0.4", optional = true }
 serde_json = { version = "1", optional = true }
+arrayvec = { version = "0.7", optional = true }
 
 [dev-dependencies]
 insta = "1.29.0"

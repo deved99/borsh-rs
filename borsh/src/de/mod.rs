@@ -1110,3 +1110,14 @@ impl BorshDeserialize for std::time::Duration {
         Ok(Self::new(secs, nanos))
     }
 }
+
+#[cfg(feature = "arrayvec")]
+impl<const N: usize> BorshDeserialize for arrayvec::ArrayString<N> {
+    fn deserialize_reader<R: Read>(reader: &mut R) -> Result<Self> {
+        let s = <String>::deserialize_reader(reader)?;
+        Self::from(&s).map_err(|e| {
+            let msg = format!("Couldn't create an ArrayString from {s} because: {e}");
+            Error::new(ErrorKind::Other, msg)
+        })
+    }
+}
